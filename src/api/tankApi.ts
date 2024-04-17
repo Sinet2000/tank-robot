@@ -1,6 +1,7 @@
 import axios from 'axios';
 import api from './api'
 import IClawInitControl from '../types/IClawInitControl';
+import IImageData from '../types/IImageData';
 
 export const motorControl = async (action: string) => {
   try {
@@ -10,6 +11,20 @@ export const motorControl = async (action: string) => {
 
     const errorResponse = (error as { response?: { data: any } }).response;
     throw errorResponse ? errorResponse.data : new Error('Could not connect to server');
+  }
+};
+
+export const captureImage = async (): Promise<IImageData> => {
+  try {
+    const response = await api.get('/image');
+    const imageData = response.data.imageData;
+    const fileName = response.data.fileName;
+
+    // Return the image data and filename
+    return { imageData, fileName };
+  } catch (error) {
+    const errorResponse = (error as { response?: { data: any } }).response;
+    throw errorResponse ? errorResponse.data : new Error('Could not control claw');
   }
 };
 

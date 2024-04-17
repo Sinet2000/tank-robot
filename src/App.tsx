@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 import { MotorControl } from "./components/MotorControl";
 import { ClawControl } from "./components/ClawControl";
 import { CameraStream } from "./components/CameraStream";
+import { ImageDisplay } from "./components/ImageDisplay";
 import { DistanceDisplay } from "./components/DistanceDisplay";
 import { ConnectApi } from "./components/ConnectApi";
 import { useMotorControl } from "./hooks/useMotorControl";
+import { useImageCapture } from "./hooks/useImageCapture";
 import { useClawControl } from "./hooks/useClawControl";
 import { useDistance } from "./hooks/useDistance";
 
@@ -51,6 +53,7 @@ const App: React.FC = () => {
 
   const handleMotorControl = useMotorControl();
   const handleClawControl = useClawControl();
+  const { handleImageCapture, imageData, loading } = useImageCapture();
   
   // const distance = useDistance(1000); // Update distance every 1000 ms (1 second)
   const cameraStreamUrl = `http://191.168.1.15:5000/api/camera-stream`;
@@ -108,12 +111,13 @@ const App: React.FC = () => {
                 </Col>
                 <Col xs={24} sm={12} lg={18}>
                   {/* <CameraStream streamUrl={cameraStreamUrl} /> */}
+                  <ImageDisplay loading={loading} imageData={imageData} onImageCapture={handleImageCapture} />
                 </Col>
               </Row>
             </div>
           ): <p>Not connected</p>}
         </Content>
-        <Footer style={{ textAlign: "center" }}>Nikita Nikitins ©2023</Footer>
+        <Footer style={{ textAlign: "center" }}>Nikita Nikitins ©2024</Footer>
       </Layout>
     </Layout>
   );

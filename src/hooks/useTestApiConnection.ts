@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { testApi } from '../api/tankApi';
 
 export const useApiConnection = () => {
-    const [apiUrl, setApiUrl] = useState('');
+    const [apiUrl, setApiUrl] = useState('http://localhost:5000/api');
     const [isConnected, setIsConnected] = useState(false);
 
     const testApiConnection = async () => {
